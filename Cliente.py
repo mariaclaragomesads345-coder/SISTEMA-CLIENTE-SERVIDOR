@@ -1,16 +1,31 @@
 import socket
+import tkinter as tk
+from tkinter import messagebox
 
-HOST = 'localhost'
-PORT = 5000
+def conectar_ao_serviimportdor():
+    try:
+        cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        cliente.connect(('localhost', 5000))
 
-cliente = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-cliente.connect((HOST, PORT))
-print("[+] Conectado ao servidor!")
+        cliente.send("Ola´, sou o cliente visual!".encode('utf-8'))
 
-mensagem = "Solicitando acesso ao sistema..."
-cliente.send(mensagem.encode('utf-8'))
+        resposta = cliente.recv(1024).decode('utf-8')
+        cliente.close()
 
-resposta = cliente.recv(1024).decode('utf-8')
-print(f"[+] Resposta do Servidor: {resposta}")
+        messagebox.showinfo("Sucesso", f"Resposta do servidor: {resposta}")
 
-cliente.close()
+    except Exception as e:
+
+        messagebox.showerror("Erro", f"Não foi possível conectar ao servidor: {e}")
+
+janela = tk.Tk()
+janela.title("meu sistema cliente")
+janela.geometry("300x200")
+
+texto = tk.Label(janela, text="Clique no botão para conectar ao servidor", font=("Arial", 10))
+texto.pack(pady=20)
+
+botao = tk.Button(janela, text="Conectar", command=conectar_ao_servidor, bg="green", fg="white", font=("Arial", 11, "bold"))
+botao.pack(pady=20)
+
+janela.mainloop()

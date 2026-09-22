@@ -27,5 +27,9 @@ texto.pack(pady=20)
 
 botao = tk.Button(janela, text="Conectar", command=conectar_ao_servidor, bg="green", fg="white", font=("Arial", 11, "bold"))
 botao.pack(pady=20)
+tk.Label(janela, text="Mensageiro (janela)", font=("Arial", 12, "bold")).pack(pady=5)
+
+campo_texto = tk.Entry(janela, width=30, font=("Arial", 11))
+campo_texto.pack(pady=5)
 
 janela.mainloop()
